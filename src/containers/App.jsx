@@ -9,7 +9,11 @@ import Footer from '../components/Footer';
 import '../assets/styles/App.scss';
 
 const App = () => {
-  const [videos, setVideos] = useState([]);
+  const [videos, setVideos] = useState({
+    myList: [],
+    trends: [],
+    originals: [],
+  });
 
   useEffect(() => {
     fetch('http://localhost:3000/initalState')
@@ -23,20 +27,19 @@ const App = () => {
     <div className='app'>
       <Header />
       <Search />
-      <Categories title='Mi lista'>
-        <Carousel>
-          <CarouselItem />
-          <CarouselItem />
-          <CarouselItem />
-          <CarouselItem />
-        </Carousel>
-      </Categories>
+      {videos.myList && (
+        <Categories title='Mi lista'>
+          <Carousel>
+            <CarouselItem />
+          </Carousel>
+        </Categories>
+      )}
 
       <Categories title='Tendencias'>
         <Carousel>
-          <CarouselItem />
-          <CarouselItem />
-          <CarouselItem />
+          {videos.trends.map((item) => {
+            return <CarouselItem key={item.id} {...item} />;
+          })}
         </Carousel>
       </Categories>
 
