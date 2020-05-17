@@ -10,7 +10,7 @@ import reducer from './reducers';
 const initialState = {
   user: {},
   playing: {},
-  mylist: [],
+  myList: [],
   trends: [
     {
       id: 2,
