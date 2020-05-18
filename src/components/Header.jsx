@@ -8,8 +8,14 @@ import userIcon from '../assets/static/user-icon.png';
 
 import gravatar from '../utils/gravatar';
 
+import { logoutRequest } from '../actions';
+
 const Header = (props) => {
   const { user } = props;
+
+  const handleLogout = () => {
+    props.logoutRequest({});
+  };
   return (
     <header className='header'>
       <Link to='/'>
@@ -24,12 +30,22 @@ const Header = (props) => {
           <p>Perfil</p>
         </div>
         <ul>
-          <li>
-            <a href='/'>Cuenta</a>
-          </li>
-          <li>
-            <Link to='/login'>Iniciar sesión</Link>
-          </li>
+          {user.email ? (
+            <li>
+              <a href='/'>Cuenta</a>
+            </li>
+          ) : null}
+          {user.email ? (
+            <li>
+              <a href='#logout' onClick={handleLogout}>
+                Cerrar Sesión
+              </a>
+            </li>
+          ) : (
+            <li>
+              <Link to='/login'>Iniciar sesión</Link>
+            </li>
+          )}
         </ul>
       </div>
     </header>
@@ -40,4 +56,7 @@ const mapStateToProps = (state) => ({
   user: state.user,
 });
 
-export default connect(mapStateToProps, null)(Header);
+const mapDispatchToProps = {
+  logoutRequest,
+};
+export default connect(mapStateToProps, mapDispatchToProps)(Header);
