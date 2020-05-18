@@ -1,4 +1,5 @@
 const reducer = (state, action) => {
+  console.log(action, state);
   switch (action.type) {
     case 'SET_FAVORITE':
       return {
@@ -13,7 +14,7 @@ const reducer = (state, action) => {
     case 'LOGIN_REQUEST':
       return {
         ...state,
-        user: action.paylaod,
+        user: action.payload,
       };
     default:
       return state;
