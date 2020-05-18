@@ -32,9 +32,13 @@ const Header = (props) => {
         <ul>
           {user.email ? (
             <li>
-              <a href='/'>Cuenta</a>
+              <a href='/'>{user.name || 'Cuenta'}</a>
             </li>
-          ) : null}
+          ) : (
+            <li>
+              <Link to='/register'>Registro</Link>
+            </li>
+          )}
           {user.email ? (
             <li>
               <a href='#logout' onClick={handleLogout}>
