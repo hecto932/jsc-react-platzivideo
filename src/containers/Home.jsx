@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
+import Header from '../components/Header';
 import Search from '../components/Search';
 import Categories from '../components/Categories';
 import Carousel from '../components/Carousel';
@@ -10,36 +11,34 @@ import '../assets/styles/App.scss';
 const Home = ({ myList, trends, originals }) => {
   return (
     <>
-      <Search />
-      {myList && (
-        <Categories title='Mi lista'>
+      <Header />
+      <Search isHome />
+      {myList.length > 0 && (
+        <Categories title='Mi Lista'>
           <Carousel>
-            {myList.map((item) => {
-              return <CarouselItem key={item.id} {...item} isList />;
-            })}
+            {myList.map((item) => (
+              <CarouselItem key={item.id} {...item} isList />
+            ))}
           </Carousel>
         </Categories>
       )}
-
       <Categories title='Tendencias'>
         <Carousel>
-          {trends.map((item) => {
-            return <CarouselItem key={item.id} {...item} />;
-          })}
+          {trends.map((item) => (
+            <CarouselItem key={item.id} {...item} />
+          ))}
         </Carousel>
       </Categories>
-
-      <Categories title='Originales de PlatziVideo'>
+      <Categories title='Originales de Platzi Video'>
         <Carousel>
-          {originals.map((item) => {
-            return <CarouselItem key={item.id} {...item} />;
-          })}
+          {originals.map((item) => (
+            <CarouselItem key={item.id} {...item} />
+          ))}
         </Carousel>
       </Categories>
     </>
   );
 };
-
 const mapStateToProps = (state) => {
   return {
     myList: state.myList,
@@ -47,5 +46,4 @@ const mapStateToProps = (state) => {
     originals: state.originals,
   };
 };
-
 export default connect(mapStateToProps, null)(Home);
