@@ -16,6 +16,7 @@
     "babel-eslint": "^10.1.0",
     "classnames": "^2.2.6",
     "clsx": "^1.1.1",
+    "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.22.0",
@@ -26,10 +27,13 @@
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
+    "react-hot-loader": "^4.12.21",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
     "redux": "^4.0.5",
-    "dotenv": "^8.2.0"
+    "webpack": "^4.43.0",
+    "webpack-dev-middleware": "^3.7.2",
+    "webpack-hot-middleware": "^2.25.0"
   },
   "devDependencies": {
     "@babel/core": "^7.10.3",
@@ -44,7 +48,6 @@
     "node-sass": "^4.14.1",
     "nodemon": "^2.0.4",
     "sass-loader": "^8.0.2",
-    "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"
   }
