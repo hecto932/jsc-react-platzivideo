@@ -6,7 +6,7 @@
   "scripts": {
     "build": "webpack --mode production",
     "start": "webpack-dev-server --open 0.0.0.0 --mode development",
-    "start:dev": "node src/server/index"
+    "start:dev": "nodemon src/server/index"
   },
   "keywords": [],
   "author": "",
@@ -16,7 +16,6 @@
     "babel-eslint": "^10.1.0",
     "classnames": "^2.2.6",
     "clsx": "^1.1.1",
-    "dotenv": "^8.2.0",
     "eslint": "^6.8.0",
     "eslint-config-airbnb": "^18.2.0",
     "eslint-plugin-import": "^2.22.0",
@@ -29,7 +28,8 @@
     "react-dom": "^16.13.1",
     "react-redux": "^7.2.0",
     "react-router-dom": "^5.2.0",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "dotenv": "^8.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.10.3",
@@ -42,6 +42,7 @@
     "html-webpack-plugin": "^4.3.0",
     "mini-css-extract-plugin": "^0.9.0",
     "node-sass": "^4.14.1",
+    "nodemon": "^2.0.4",
     "sass-loader": "^8.0.2",
     "webpack": "^4.43.0",
     "webpack-cli": "^3.3.12",
