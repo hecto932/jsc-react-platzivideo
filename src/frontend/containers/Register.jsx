@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import Header from '../components/Header';
 import { registerRequest } from '../actions';
-import { Link } from 'react-router-dom';
 import '../assets/styles/components/Register.scss';
 
 const Register = (props) => {
@@ -53,7 +53,9 @@ const Register = (props) => {
               placeholder='Contraseña'
               onChange={handleInput}
             />
-            <button className='button'>Registrarme</button>
+            <button type='button' className='button'>
+              Registrarme
+            </button>
           </form>
           <Link to='/login'>Iniciar sesión</Link>
         </section>

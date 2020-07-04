@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+/* eslint-disable react/jsx-props-no-spreading */
+import React from 'react';
 import { connect } from 'react-redux';
 import Header from '../components/Header';
 import Search from '../components/Search';

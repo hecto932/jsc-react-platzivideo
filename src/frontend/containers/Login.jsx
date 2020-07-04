@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-one-expression-per-line */
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -46,9 +47,11 @@ const Login = (props) => {
               placeholder='Contraseña'
               onChange={handleInput}
             />
-            <button className='button'>Iniciar sesión</button>
+            <button type='button' className='button'>
+              Iniciar sesión
+            </button>
             <div className='login__container--remember-me'>
-              <label>
+              <label htmlFor='cbox1'>
                 <input type='checkbox' id='cbox1' value='first_checkbox' />{' '}
                 Recuérdame
               </label>
@@ -57,10 +60,12 @@ const Login = (props) => {
           </form>
           <section className='login__container--social-media'>
             <div>
-              <img src={googleIcon} /> Inicia sesión con Google
+              <img src={googleIcon} alt='google-login' /> Inicia sesión con
+              Google
             </div>
             <div>
-              <img src={twitterIcon} /> Inicia sesión con Twitter
+              <img src={twitterIcon} alt='twitter-login' /> Inicia sesión con
+              Twitter
             </div>
           </section>
           <p className='login__container--register'>
