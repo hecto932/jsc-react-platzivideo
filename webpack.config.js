@@ -1,3 +1,4 @@
+/* eslint-disable implicit-arrow-linebreak */
 /* eslint-disable operator-linebreak */
 /* eslint-disable indent */
 const webpack = require('webpack');
@@ -43,6 +44,13 @@ module.exports = {
           priority: 1,
           filename: isDev ? 'assets/vendor.js' : 'assets/vendor-[hash].js',
           enforce: true,
+          test(module, chunks) {
+            const name = module.nameForCondition && module.nameForCondition();
+            return chunks.some(
+              (chunk) =>
+                chunk.name !== 'vendors' && /[\\/]node_modules[\\/]/.test(name)
+            );
+          },
         },
       },
     },
