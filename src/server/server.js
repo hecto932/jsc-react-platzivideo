@@ -113,8 +113,8 @@ app.post('/auth/sign-in', async (req, res, next) => {
         const { token, ...user } = data;
 
         res.cookie('token', token, {
-          httpOnly: !config.dev,
-          secure: !config.dev,
+          httpOnly: !process.env.ENV,
+          secure: !process.env.ENV,
         });
 
         res.status(200).json(user);
@@ -129,13 +129,21 @@ app.post('/auth/sign-up', async (req, res, next) => {
   const { body: user } = req;
 
   try {
-    await axios({
-      url: `${config.apiUrl}/api/auth/sign-up`,
+    const userData = await axios({
+      url: `${process.env.API_URL}/api/auth/sign-up`,
       method: 'post',
-      data: user,
+      data: {
+        email: user.email,
+        name: user.name,
+        password: user.password,
+      },
     });
 
-    res.status(201).json({ message: 'user created' });
+    res.status(201).json({
+      name: req.body.name,
+      email: req.body.email,
+      id: userData.data.id,
+    });
   } catch (error) {
     next(error);
   }
