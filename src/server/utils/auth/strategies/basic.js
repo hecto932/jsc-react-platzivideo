@@ -4,6 +4,8 @@ const { BasicStrategy } = require('passport-http');
 const boom = require('@hapi/boom');
 const axios = require('axios');
 
+require('dotenv').config();
+
 passport.use(
   new BasicStrategy(async function (email, password, cb) {
     try {
@@ -15,7 +17,7 @@ passport.use(
           username: email,
         },
         data: {
-          apiKeyToken: process.env.API_KEY,
+          apiKeyToken: process.env.API_KEY_TOKEN,
         },
       });
 
