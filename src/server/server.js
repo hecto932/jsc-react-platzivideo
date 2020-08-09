@@ -16,7 +16,6 @@ import passport from 'passport';
 import axios from 'axios';
 import serverRoutes from '../frontend/routes/serverRoutes';
 import reducer from '../frontend/reducers';
-import initialState from '../frontend/initialState';
 import getManifest from './getManifest';
 
 dotenv.config();
@@ -85,12 +84,36 @@ const setResponse = (html, preloadedState, manifest) => {
 };
 
 const renderApp = (req, res) => {
+  let initialState;
+  const { email, name, id } = req.cookies;
+
+  if (id) {
+    initialState = {
+      user: {
+        email,
+        name,
+        id,
+      },
+      myList: [],
+      trends: [],
+      originals: [],
+    };
+  } else {
+    initialState = {
+      user: {},
+      myList: [],
+      trends: [],
+      originals: [],
+    };
+  }
+
   const store = createStore(reducer, initialState);
   const preloadedState = store.getState();
+  const isLogged = initialState.user.id;
   const html = renderToString(
     <Provider store={store}>
       <StaticRouter location={req.url} context={{}}>
-        {renderRoutes(serverRoutes)}
+        {renderRoutes(serverRoutes(isLogged))}
       </StaticRouter>
     </Provider>,
   );
@@ -105,22 +128,22 @@ app.post('/auth/sign-in', async (req, res, next) => {
         next(boom.unauthorized());
       }
 
-      req.login(data, { session: false }, async (error) => {
-        if (error) {
-          next(error);
+      req.login(data, { session: false }, async (err) => {
+        if (err) {
+          next(err);
         }
 
         const { token, ...user } = data;
 
         res.cookie('token', token, {
-          httpOnly: !process.env.ENV,
-          secure: !process.env.ENV,
+          httpOnly: !(ENV === 'development'),
+          secure: !(ENV === 'development'),
         });
 
         res.status(200).json(user);
       });
-    } catch (error) {
-      next(error);
+    } catch (err) {
+      next(err);
     }
   })(req, res, next);
 });
