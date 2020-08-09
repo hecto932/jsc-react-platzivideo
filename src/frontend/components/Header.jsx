@@ -1,3 +1,4 @@
+/* eslint-disable jsx-quotes */
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
@@ -13,7 +14,12 @@ const Header = (props) => {
   const hasUser = Object.keys(user).length > 0;
 
   const handleLogout = () => {
+    document.cookie = 'email=';
+    document.cookie = 'name=';
+    document.cookie = 'id=';
+    document.cookie = 'token=';
     props.logoutRequest({});
+    window.location.href = '/login';
   };
   const headerClass = clsx('header', {
     isLogin,
@@ -21,33 +27,33 @@ const Header = (props) => {
   });
   return (
     <header className={headerClass}>
-      <Link to='/'>
-        <img className='header__img' src={logo} alt='Platzi Video' />
+      <Link to="/">
+        <img className="header__img" src={logo} alt="Platzi Video" />
       </Link>
-      <div className='header__menu'>
-        <div className='header__menu--profile'>
+      <div className="header__menu">
+        <div className="header__menu--profile">
           {hasUser ? (
             <img src={gravatar(user.email)} alt={user.email} />
           ) : (
-            <img src={userIcon} alt='' />
+            <img src={userIcon} alt="" />
           )}
           <p>Perfil</p>
         </div>
         <ul>
           {hasUser ? (
             <li>
-              <a href='/'>{user.name}</a>
+              <a href="/">{user.name}</a>
             </li>
           ) : null}
           {hasUser ? (
             <li>
-              <a href='#logout' onClick={handleLogout}>
+              <a href="#logout" onClick={handleLogout}>
                 Cerrar Sesión
               </a>
             </li>
           ) : (
             <li>
-              <Link to='/login'>Iniciar sesión</Link>
+              <Link to="/login">Iniciar sesión</Link>
             </li>
           )}
         </ul>
