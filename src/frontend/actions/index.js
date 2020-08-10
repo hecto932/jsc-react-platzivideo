@@ -58,7 +58,6 @@ export const loginUser = ({ email, password }, redirectUrl) => {
       },
     })
       .then(({ data }) => {
-        console.log('BIEN', data);
         document.cookie = `email=${data.user.email}`;
         document.cookie = `name=${data.user.name}`;
         document.cookie = `id=${data.user.id}`;
@@ -69,8 +68,43 @@ export const loginUser = ({ email, password }, redirectUrl) => {
         window.location.href = redirectUrl;
       })
       .catch((err) => {
+        dispatch(setError(err));
+      });
+  };
+};
+
+export const setMovieAsFavorite = ({ userId, movie }) => {
+  return (dispatch) => {
+    console.log('setMovieAsFavorite => ', userId, movie);
+
+    axios({
+      url: '/user-movies',
+      method: 'POST',
+      data: {
+        userId,
+        movieId: movie.id,
+      },
+    })
+      .then(({ data }) => {
+        console.log('axios result => ', data);
+        dispatch(setFavorite(movie));
+      })
+      .catch((err) => {
         console.log('ERROR', err);
         dispatch(setError(err));
       });
+  };
+};
+
+export const deleteMovieAsFavorite = (movieId) => {
+  return (dispatch) => {
+    axios({
+      url: `/user-movies/${movieId}`,
+      method: 'DELETE',
+    })
+      .then(() => {
+        dispatch(deleteFavorite(movieId));
+      })
+      .catch((err) => dispatch(setError(err)));
   };
 };

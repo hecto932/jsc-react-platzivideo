@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 /* eslint-disable global-require */
-import express from 'express';
+import express, { response } from 'express';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import webpack from 'webpack';
@@ -83,22 +83,55 @@ const setResponse = (html, preloadedState, manifest) => {
     `;
 };
 
-const renderApp = (req, res) => {
+const renderApp = async (req, res) => {
   let initialState;
-  const { email, name, id } = req.cookies;
+  const { token, email, name, id } = req.cookies;
 
-  if (id) {
+  try {
+    let movieList = await axios({
+      url: `${process.env.API_URL}/api/movies`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      method: 'GET',
+    });
+    movieList = movieList.data.data;
+
+    let { data: userMovies } = await axios({
+      url: `${process.env.API_URL}/api/user-movies`,
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      method: 'GET',
+    });
+    userMovies = userMovies.data.map((item) => item.movieId);
+
+    const myList = movieList.filter(
+      (movie) => userMovies.indexOf(movie._id) !== -1,
+    );
+
     initialState = {
       user: {
         email,
         name,
         id,
       },
-      myList: [],
-      trends: [],
-      originals: [],
+      myList,
+      trends: movieList.filter(
+        (movie) =>
+          movie.contentRating === 'PG' &&
+          movie._id &&
+          userMovies.indexOf(movie._id) === -1,
+      ),
+      originals: movieList.filter(
+        (movie) =>
+          movie.contentRating === 'G' &&
+          movie._id &&
+          userMovies.indexOf(movie._id) === -1,
+      ),
     };
-  } else {
+  } catch (err) {
+    console.log('ERROR => ', err.message);
     initialState = {
       user: {},
       myList: [],
@@ -169,6 +202,51 @@ app.post('/auth/sign-up', async (req, res, next) => {
     });
   } catch (error) {
     next(error);
+  }
+});
+
+app.post('/user-movies', async (req, res, next) => {
+  const { body: userMovie } = req;
+  const { token } = req.cookies;
+
+  try {
+    const { data, status } = await axios({
+      url: `${process.env.API_URL}/api/user-movies`,
+      headers: { Authorization: `Bearer ${token}` },
+      data: userMovie,
+      method: 'POST',
+    });
+    console.log('server -> ', data, status);
+
+    if (status !== 200 && status !== 201) {
+      return next(boom.badImplementation());
+    }
+
+    res.status(201).json({
+      data,
+    });
+  } catch (err) {
+    next(err);
+  }
+});
+
+app.delete('/user-movies/:movieId', async (req, res, next) => {
+  const { movieId } = req.params;
+  const { token } = req.cookies;
+  try {
+    const { data, status } = await axios({
+      url: `${process.env.API_URL}/api/user-movies/${movieId}`,
+      headers: { Authorization: `Bearer ${token}` },
+      method: 'DELETE',
+    });
+
+    if (status !== 200 && status !== 201) {
+      return next(boom.badImplementation());
+    }
+
+    res.status(200).json(data);
+  } catch (err) {
+    next(err);
   }
 });
 

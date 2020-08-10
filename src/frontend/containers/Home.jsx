@@ -1,3 +1,6 @@
+/* eslint-disable function-paren-newline */
+/* eslint-disable implicit-arrow-linebreak */
+/* eslint-disable jsx-quotes */
 /* eslint-disable react/jsx-props-no-spreading */
 import React from 'react';
 import { connect } from 'react-redux';
@@ -15,7 +18,7 @@ const Home = ({ myList, trends, originals }) => {
       <Header />
       <Search isHome />
       {myList.length > 0 && (
-        <Categories title='Mi Lista'>
+        <Categories title="Mi Lista">
           <Carousel>
             {myList.map((item) => (
               <CarouselItem key={item.id} {...item} isList />
@@ -23,14 +26,14 @@ const Home = ({ myList, trends, originals }) => {
           </Carousel>
         </Categories>
       )}
-      <Categories title='Tendencias'>
+      <Categories title="Tendencias">
         <Carousel>
           {trends.map((item) => (
             <CarouselItem key={item.id} {...item} />
           ))}
         </Carousel>
       </Categories>
-      <Categories title='Originales de Platzi Video'>
+      <Categories title="Originales de Platzi Video">
         <Carousel>
           {originals.map((item) => (
             <CarouselItem key={item.id} {...item} />
