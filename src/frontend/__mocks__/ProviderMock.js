@@ -20,4 +20,4 @@ const ProviderMock = ({ children }) => (
   </Provider>
 );
 
-module.export = ProviderMock;
+export default ProviderMock;
