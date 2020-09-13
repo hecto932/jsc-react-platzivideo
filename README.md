@@ -4,7 +4,7 @@ PlatziVideo is an React app created based on Javascript carrier of Platzi.
 
 # Demo
 
-(https://platzivideo-hecto932.herokuapp.com/)[https://platzivideo-hecto932.herokuapp.com/]
+[https://platzivideo-hecto932.herokuapp.com/](https://platzivideo-hecto932.herokuapp.com/)
 
 # License
 
