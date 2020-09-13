@@ -84,5 +84,8 @@
       "\\.(jpg|jpeg|png|gif)$": "<rootDir>/src/frontend/__mocks__/fileMock.js",
       "\\.(scss|css|sass)$": "<rootDir>/src/frontend/__mocks__/styleMock.js"
     }
+  },
+  "engines": {
+    "node": "12.16.x"
   }
 }
